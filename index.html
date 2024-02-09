@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Hearts Day Yen</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ee8eb2;
+            color: #333;
+            text-align: center;
+        }
+
+        #header {
+            background-color: #ee377d;
+            padding: 20px;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000; /* Ensure it's on top of everything */
+            font-size: 24px;
+        }
+
+        #valentine-container {
+            margin-top: 70px; /* Adjust to accommodate the header */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #gif-container {
+            margin-top: 20px;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        #valentine-text {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .button.yes {
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">Hello Pretty Yen!</div>
+    <div id="valentine-container">
+        <div id="gif-container">
+            <iframe src="https://giphy.com/embed/UVk5yzljef0kGiayL1" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+        </div>
+        <div id="valentine-text">Will you be my Valentine's date this February 2024?</div>
+        <div id="valentine-text">-Ken</div>
+        <div class="button-container">
+            <button class="button">No</button>
+            <button class="button yes" onclick="redirectToAnotherPage()">Yes</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const buttons = document.querySelectorAll('.button');
+
+            function moveButton(event) {
+                const mouseX = event.clientX;
+                const mouseY = event.clientY;
+                buttons.forEach(button => {
+                    const buttonRect = button.getBoundingClientRect();
+                    const buttonX = buttonRect.left + buttonRect.width / 2;
+                    const buttonY = buttonRect.top + buttonRect.height / 2;
+                    const deltaX = buttonX - mouseX;
+                    const deltaY = buttonY - mouseY;
+                    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    if (distance < 100 && !button.classList.contains('yes')) {
+                        const angle = Math.atan2(deltaY, deltaX);
+                        const newX = buttonX + Math.cos(angle) * 100;
+                        const newY = buttonY + Math.sin(angle) * 100;
+
+                        // Anime.js animation
+                        anime({
+                            targets: button,
+                            translateX: newX - buttonX,
+                            translateY: newY - buttonY,
+                            duration: 500,
+                            easing: 'easeInOutQuad'
+                        });
+                    } else {
+                        // Reset position
+                        anime({
+                            targets: button,
+                            translateX: 0,
+                            translateY: 0,
+                            duration: 500,
+                            easing: 'easeInOutQuad'
+                        });
+                    }
+                });
+            }
+
+            document.addEventListener('mousemove', moveButton);
+        });
+        function redirectToAnotherPage() {
+            // Redirecting to another page
+            window.location.href = "hih.html";
+        }
+    </script>
+</body>
+</html>
